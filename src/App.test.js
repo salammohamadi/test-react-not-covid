@@ -1,8 +1,41 @@
-import { render, screen } from '@testing-library/react';
+import { render, screen, fireEvent } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+test('button has correct initial color', () => {
+  render(<App/>);
+  const colorButton = screen.getByRole('button', {name: /change to blue/i});
+
+  expect(colorButton).toHaveStyle({backgroundColor: 'red'});
+
+  fireEvent.click(colorButton);
+
+  expect(colorButton).toHaveStyle({backgroundColor:'blue'});
+
+  expect(colorButton.textContent).toBe('change to red');
+});
+
+test('button is initially enabled', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  const buttonElement = screen.getByRole('button', { name: /change to blue/i  });
+  const checkboxElement = screen.getByRole('checkbox');
+
+  expect(buttonElement).toBeEnabled();
+  expect(checkboxElement).not.toBeChecked();
+});
+
+test('button is toggled when checkbox is clicked', () => {
+  render(<App />);
+  const buttonElement = screen.getByRole('button', { name: /change to blue/i  });
+  const checkboxElement = screen.getByRole('checkbox');
+
+  fireEvent.click(checkboxElement);
+
+  expect(checkboxElement).toBeChecked();
+  expect(buttonElement).toBeDisabled();
+
+  fireEvent.click(checkboxElement);
+
+  expect(checkboxElement).not.toBeChecked();
+  expect(buttonElement).toBeEnabled();
+
 });
