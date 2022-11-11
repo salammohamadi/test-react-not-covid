@@ -12,12 +12,13 @@ function App() {
   return (
     <div>
       <button
-        style={{backgroundColor: bgColor, color: 'white', borderRadius: '8px'}}
+        style={{backgroundColor: btnDisabled ? 'gray' : bgColor, color: 'white', borderRadius: '8px'}}
         onClick={clickHandler}
         disabled={btnDisabled}      
       >
         change to {bgColor === 'red' ? 'blue' :'red'}
       </button>
+      <label htmlFor="enable-button-checkbox">checkbox</label>
       <input
         type="checkbox"
         id='enable-button-checkbox'
